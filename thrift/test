@@ -1,0 +1,49 @@
+namespace java com.xiaomi.miui.ad.thrift.service
+
+include "dependency/miliao_shared.thrift"
+include "dependency/AppStoreSearchModels.thrift"
+include "MiuiBiddingAdModel.thrift"
+include "dependency/MiuiAdDspModel.thrift"
+
+struct ClientInfo{}
+struct ClientInfoV2{}
+struct AdInfo{}
+struct AdResultInfo{}
+struct ClientInfoV3{}
+struct SearchAdResult{}
+struct AppMarketSearchParam{}
+struct AppStoreAutoSuggestionResult{}
+struct XiaomiAdInfo{}
+
+struct AppStoreDesktopFolderParams{}
+struct AppStoreDesktopFolderResults{}
+
+
+enum RankingBoardType{
+    DOWNLOAD_RANK,
+    BIAOSHENG_RANK,
+    XINRUI_RANK,
+    GAME_RANK
+}
+
+service MiuiAdQueryService extends miliao_shared.MiliaoSharedService{
+    list<string> getAds(1:ClientInfo clientInfo,2:i32 start,3:i32 len,4:string serviceName)
+    list<AdInfo> getAdsV2(1:ClientInfoV2 clientInfoV2,2:i32 start,3:i32 len)
+    AdResultInfo getAdsV3(1:ClientInfoV3 clientInfoV3,2:i32 start,3:i32 len)
+    SearchAdResult getSearchAdResult(1:ClientInfoV3 clientInfoV3,2:AppMarketSearchParam param)
+    list<XiaomiAdInfo> getBrandAd(1:ClientInfoV3 clientInfoV3,2:i32 start,3:i32 len)
+    AppStoreDesktopFolderResults getAppStoreDeskTopFolderResult(1:ClientInfoV3 clientInfoV3,2:AppStoreDesktopFolderParams  param)
+    AdResultInfo getGameAds(1:ClientInfoV3 clientInfoV3)
+    AdResultInfo getEComAds(1:ClientInfoV3 clientInfoV3)
+    AdResultInfo getAppAds(1:ClientInfoV3 clientInfoV3)
+	AdResultInfo getBeePlanAds(1:ClientInfoV3 clientInfoV3)
+    AdResultInfo getNewsAds(1:ClientInfoV3 clientInfoV3)
+    AdResultInfo getExternalDSPAds(1:ClientInfoV3 clientInfoV3)
+    AdResultInfo getAllAds(1:ClientInfoV3 clientInfoV3)
+    list<string> hotSuggest(1:ClientInfoV3 clientInfoV3, 2:i32 num)
+    AdResultInfo getHotSuggestions(1:ClientInfoV3 clientInfoV3, 2:i32 len)
+    bool isForumPenzi(1:string imei)
+    bool isBlockedForumPenzi(1:ClientInfoV3 clientInfoV3)
+    AppStoreAutoSuggestionResult getAutoSuggestions(1:ClientInfoV3 clientInfoV3,2:AppMarketSearchParam param)
+    list<string> getAdsAppIds(1:RankingBoardType rankType)
+}
